@@ -1,0 +1,51 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.gantt-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.gantt-label {
+  width: 220px;
+  font-size: 14px;
+}
+
+.gantt-bar {
+  height: 24px;
+  background-color: #4a90d9;
+  border-radius: 4px;
+}
+
+.gantt-bar.analyse    { background-color: #4a90d9; }
+.gantt-bar.outil      { background-color: #f5a623; }
+.gantt-bar.terrain    { background-color: #7ed321; }
+.gantt-bar.validation { background-color: #d0021b; }
+
+.gantt-bar.selected {
+  outline: 3px solid black;
+}.gantt-bar {
+  position: relative;
+  overflow: hidden;
+}
+
+.gantt-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+#details-panel {
+  margin-top: 20px;
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  max-width: 400px;
+}
+

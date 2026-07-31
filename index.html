@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Mon Gantt - Internship Steps</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>IF</h1>
+  <div id="gantt-container"></div>
+  <div id="details-panel" style="display:none;"></div>
+
+  <script>
+    const tasks = [
+  { name: "1. Observation atelier", start: 0, duration: 7, category: "analyse", percentComplete: 100, description: "Observation de l'atelier et compréhension du flux de production." },
+  { name: "2. Pareto des OF", start: 7, duration: 2, category: "analyse", percentComplete: 100, description: "Préparation d'un Pareto des OF ayant le plus de non-conformités." },
+  { name: "3. Répartition par familles", start: 9, duration: 2, category: "analyse", percentComplete: 100, description: "Répartition des OF par familles, tri décroissant par nombre de défauts." },
+  { name: "4. Outil VBA (photos OF)", start: 11, duration: 5, category: "outil", percentComplete: 100, description: "Développement d'un outil VBA affichant la photo de l'OF pour décider si une IF est nécessaire." },
+  { name: "5. Observation terrain", start: 16, duration: 4, category: "terrain", percentComplete: 100, description: "Observation sur le terrain des OF nécessitant des IF." },
+  { name: "6. Réalisation des IF", start: 20, duration: 6, category: "terrain", percentComplete: 60, description: "Réalisation des instructions de fabrication (IF)." },
+  { name: "7. Validation", start: 26, duration: 4, category: "validation", percentComplete: 0, description: "Validation finale des IF réalisées." }
+];
+
+const today = 24; // le "jour actuel" du projet, à ajuster
+    const container = document.getElementById("gantt-container");
+
+    tasks.forEach(task => {
+  const row = document.createElement("div");
+  row.className = "gantt-row";
+
+  const label = document.createElement("div");
+  label.className = "gantt-label";
+  label.textContent = task.name;
+
+  const bar = document.createElement("div");
+  bar.className = "gantt-bar " + task.category;
+  bar.style.marginLeft = (task.start * 20) + "px";
+  bar.style.width = (task.duration * 20) + "px";
+
+  bar.title = task.name + "\nDébut : jour " + task.start + "\nDurée : " + task.duration + " jours"; 
+  
+  const progress = document.createElement("div");
+  progress.className = "gantt-progress";
+  progress.style.width = task.percentComplete + "%";
+  bar.appendChild(progress); 
+
+  bar.addEventListener("click", () => {
+  document.querySelectorAll(".gantt-bar").forEach(b => b.classList.remove("selected"));
+  bar.classList.add("selected");
+
+  const dueDate = task.start + task.duration;
+  const retard = (task.percentComplete < 100 && today > dueDate) ? today - dueDate : 0;
+
+  const panel = document.getElementById("details-panel");
+  panel.style.display = "block";
+  panel.innerHTML =
+    "<h3>" + task.name + "</h3>" +
+    "<p>" + task.description + "</p>" +
+    "<p><strong>Début :</strong> jour " + task.start + "</p>" +
+    "<p><strong>Échéance :</strong> jour " + dueDate + "</p>" +
+    "<p><strong>Avancement :</strong> " + task.percentComplete + "%</p>" +
+    "<p><strong>Retard :</strong> " + (retard > 0 ? retard + " jours" : "aucun") + "</p>";
+});
+  row.appendChild(label);
+  row.appendChild(bar);
+  container.appendChild(row);
+});
+
+  </script>
+</body>
+</html>
